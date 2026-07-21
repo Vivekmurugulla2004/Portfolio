@@ -1,6 +1,6 @@
 # Vivek Murugulla, Portfolio
 
-**[Live Site](https://vivekmurugulla2004.github.io/)** · **[Resume](Vivek_Murugulla_Resume_MSBA.pdf)** · **[LinkedIn](https://www.linkedin.com/in/vivekmurugulla/)**
+**[Live Site](https://vivekmurugulla2004.github.io/Portfolio/)** · **[Resume](Vivek_Murugulla_Resume_MSBA.pdf)** · **[LinkedIn](https://www.linkedin.com/in/vivekmurugulla/)**
 
 A single-page portfolio built from scratch with plain HTML, CSS, and JavaScript: no framework, no build step, no template. Covers two shipped products (a native macOS app and a three-year media business), a research assistantship, and an internship, structured as an expandable case-study interface rather than a static résumé page.
 
