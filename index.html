@@ -177,9 +177,9 @@
       then use data to prove it's worth using.
     </p>
     <p class="hero-sub reveal in reveal-delay-2">
-      I build products end to end, then use data and research to prove they work. That's a native macOS app I
-      designed, built, and shipped solo, and a media business I've run for three years, engineered up to a
-      perfect Core Web Vitals score. Currently an MS Business Analytics candidate at the University of Georgia,
+      I build products end to end, then use data and research to prove they work. That's a native macOS and
+      iPadOS app I designed, built, and shipped solo, and a media business I've run for three years, engineered
+      up to a perfect Core Web Vitals score. Currently an MS Business Analytics candidate at the University of Georgia,
       looking for Summer 2027 internship and new-grad roles in software engineering, analytics, or product.
     </p>
     <div class="hero-roles reveal in reveal-delay-2">
@@ -448,7 +448,7 @@
                 <div class="nerding-out">
                   <div class="nerding-out-label">What I'm nerding out about right now</div>
                   <div class="strengths-row">
-                    <span class="strength-tag">How far a solo-built Python desktop app can go</span>
+                    <span class="strength-tag">How far a solo-built native app can go</span>
                     <span class="strength-tag">Better ways to organize large comic libraries</span>
                     <span class="strength-tag">How small UX changes move product analytics</span>
                     <span class="strength-tag">AI's role in creative work</span>
@@ -471,7 +471,7 @@
           <div class="accordion-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c2.8 2 4.5 5.6 4.5 9.3 0 2-.7 3.9-1.8 5.3l-2.7 3-2.7-3c-1.1-1.4-1.8-3.3-1.8-5.3C7.5 7.6 9.2 4 12 2Z"/><circle cx="12" cy="10.5" r="1.6"/><path d="M9 17.5 7 21l3.5-1.8M15 17.5 17 21l-3.5-1.8"/></svg></div>
           <div class="accordion-heading">
             <h3 class="text-gradient">Projects</h3>
-            <p class="accordion-teaser">Two products I own end to end: a native macOS app and a three-year media business.</p>
+            <p class="accordion-teaser">Two products I own end to end: a native macOS and iPadOS app and a three-year media business.</p>
           </div>
           <svg aria-hidden="true" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
@@ -490,7 +490,7 @@
                   <div class="accordion-heading">
                     <div class="eyebrow">Product · Solo Developer &amp; Product Designer · May 2026 – Present</div>
                     <h3>ComicArc</h3>
-                    <p class="accordion-teaser">A native macOS comic library and reader, built for people who
+                    <p class="accordion-teaser">A native SwiftUI app for macOS and iPadOS, built for people who
                     want to own their collection, not rent access to it.</p>
                   </div>
                   <svg aria-hidden="true" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -511,8 +511,8 @@
                 </div>
 
                 <div class="case-stats">
-                  <div class="case-stat"><span class="num">3</span><span class="stat-label">File formats: CBZ, CBR, PDF</span></div>
-                  <div class="case-stat"><span class="num">5</span><span class="stat-label">Core technologies: Python, Flask, SQLite, PyWebView, PyInstaller</span></div>
+                  <div class="case-stat"><span class="num">4</span><span class="stat-label">File formats: CBZ, CBR, PDF, and image folders</span></div>
+                  <div class="case-stat"><span class="num">2</span><span class="stat-label">Native platforms sharing one Swift core: macOS and iPadOS</span></div>
                   <div class="case-stat"><span class="num">0</span><span class="stat-label">Cloud dependencies, fully local-first</span></div>
                   <div class="case-stat"><span class="num">MIT</span><span class="stat-label">Open source, free to use</span></div>
                 </div>
@@ -552,8 +552,8 @@
                         else's server, the interface hadn't been redesigned in years, and performance fell apart once a
                         collection grew past a few hundred issues. None of that matched how a collector actually thinks about
                         their library, which is as something they own.</p>
-                        <p>I wanted the reader I kept wishing existed: fast, private, and built for large libraries from day
-                        one.</p>
+                        <p>I wanted the reader I kept wishing existed: fast, private, genuinely native, and built for large
+                        libraries from day one.</p>
                       </div>
                     </div>
                   </div>
@@ -563,37 +563,58 @@
                     <div class="case-block case-block--first">
                       <div class="case-block-label">Library</div>
                       <div class="case-block-body">
-                        <p>The sidebar splits the collection into Library, Continue Reading, Favorites, and a Reading List,
-                        with Publishers (color-coded, DC in blue, Marvel in red) below that for quick filtering. Every cover
-                        shows an inline issue count and a live "X of Y finished" progress readout, and a Continue Reading row
-                        up top surfaces whatever you left mid-issue so you're never hunting for where you stopped.</p>
-                        <p class="case-block-note">Every issue has its own detail page: page count, date added, a five-star
-                        rating, a free-text review box, custom tags, and a shelf system (All Comics, Currently Reading, Want
-                        to Read, Finished, Completed, DNF) for organizing beyond just "read or not." If a scan turns up gaps
-                        in a run, a <strong>Missing Issues</strong> banner flags it right on the detail page instead of
-                        leaving you to notice by accident three volumes later.</p>
+                        <p>Point ComicArc at the folder where your comics already live, and it builds Publisher,
+                        Character, and Series browsing straight from how you organized your files. Nothing gets renamed
+                        or moved without asking. You can add more than one library folder, a NAS share and a local drive,
+                        say, and it treats them as one combined library. Every cover shows an inline progress bar and
+                        star rating, and Continue Reading surfaces whatever you're mid-issue on.</p>
+                        <p class="case-block-note">A <strong>Possible Duplicates</strong> check flags comics that share a
+                        publisher, series, and issue number, usually the sign of a rescan or a re-download under a
+                        different filename, and a <strong>Metadata Conflicts</strong> view flags anything a rescan
+                        disagrees with instead of silently overwriting an edit you made by hand.</p>
                       </div>
                     </div>
                     <div class="case-block">
                       <div class="case-block-label">Reader</div>
                       <div class="case-block-body">
-                        <p>The reader opens full-window with a page slider showing exactly where you are ("Page 7 of 304"),
-                        a bookmark toggle, a contrast/theme switcher, a layout toggle, autoplay, and a keyboard-shortcuts
-                        panel, all tucked into a toolbar that gets out of the way until you need it. Progress saves as you
-                        go, not just when you close the app, so Continue Reading is always accurate.</p>
+                        <p>macOS opens the reader right inside the main window: page or continuous-scroll mode,
+                        double-page spread with automatic landscape detection, pinch and zoom, a page scrubber, autoplay,
+                        four color filters, right-to-left mode for manga, and full keyboard control. iPadOS gets its own
+                        full-screen, touch-first reader with swipe or continuous scroll, pinch to zoom, and tap zones for
+                        page turns. Both remember exactly where you left off.</p>
                       </div>
                     </div>
                     <div class="case-block">
-                      <div class="case-block-label">Stats, reading orders, and history</div>
+                      <div class="case-block-label">Reading order, done properly</div>
                       <div class="case-block-body">
-                        <p>The Statistics page is the one I check on myself most: total comics in the library, issues
-                        completed, pages read, a day streak, and a Reading Goal tracker with a percentage bar toward however
-                        many issues I set out to read that year. Underneath that, a by-publisher breakdown chart, a Top
-                        Series list, and a "Year in Review" summary turn a folder of files into actual numbers about my own
-                        reading habits, the same data-visualization instincts from my analytics coursework, just pointed at
-                        a consumer product instead of a case study. Reading Orders let you build one continuous path across
-                        issues that span multiple series, and a Creators browser lets you explore by writer or artist. None
-                        of it is there to gamify reading, it's there because I was curious what my own numbers looked like.</p>
+                        <p>Annuals, specials, and giant-size issues almost never belong at the very end of a series, even
+                        though their filenames usually sort them there. ComicArc's reading-order engine places them where
+                        they were actually published relative to everything else, using legacy numbering, cover date, and
+                        story-arc adjacency, with a proportional fallback when nothing else is available. A free,
+                        one-time offline comics database, built from a public Grand Comics Database snapshot, handles
+                        metadata matching without ever needing a live connection, and a Fix Match picker lets you correct
+                        it by hand when it gets something wrong. Manual corrections always survive a later rescan.</p>
+                      </div>
+                    </div>
+                    <div class="case-block">
+                      <div class="case-block-label">Tracking, beyond a checkbox</div>
+                      <div class="case-block-body">
+                        <p>A Diary logs every read and reread as its own dated entry, so reading history reads like an
+                        actual timeline instead of one number that keeps getting overwritten. Tier Lists let you drag
+                        comics into S through F rows. Favorite Moments saves a bookmarked page from the reader into a
+                        standalone gallery you can jump back into. Reading Paths string together an ordered, curated run
+                        across any number of series, a crossover event, a character's whole history, a best-of you're
+                        building yourself, complete with per-issue notes and a Resume button that always knows the next
+                        unfinished issue.</p>
+                      </div>
+                    </div>
+                    <div class="case-block">
+                      <div class="case-block-label">Stats and Year in Review</div>
+                      <div class="case-block-body">
+                        <p>Totals for issues and pages read, time in-app, a publisher breakdown, a reading history
+                        timeline, and an annual Year in Review recap: top series, top publisher, longest streak, and your
+                        top-rated comics of the year. None of it is there to gamify reading. It's there because I was
+                        curious what my own numbers looked like.</p>
                       </div>
                     </div>
                   </div>
@@ -613,34 +634,35 @@
                     <div class="case-block">
                       <div class="case-block-label">Architecture</div>
                       <div class="case-block-body">
-                        <p>ComicArc runs as a lightweight local web app wrapped for the desktop: a Flask backend serves the
-                        interface and handles all the library logic, SQLite stores everything, and PyWebView renders it
-                        all inside a native-feeling macOS window through the system's own WebView, no browser tab, no
-                        bundled Chromium. PyInstaller packages the whole thing into a single distributable <code>.app</code>.
-                        Four layers, each one doing exactly one job:</p>
+                        <p>ComicArc is 100% SwiftUI on top of AppKit and UIKit: real native windows and navigation on
+                        both platforms, no web view, no wrapped browser. macOS and iPadOS share one core, the database
+                        layer, the folder scanner, and the reading-order engine, and each platform builds its own
+                        interface on top of that shared core instead of one UI stretched over both. SQLite sits
+                        underneath through the raw C API directly, no ORM, no network round-trip between me and my own
+                        library. Four pieces, each doing one job:</p>
                         <div class="arch-diagram">
                           <div class="arch-layer">
                             <div>
                               <div class="layer-name">Interface</div>
-                              <div class="layer-desc">HTML/CSS/JS frontend rendered inside a PyWebView window</div>
+                              <div class="layer-desc">SwiftUI screens native to each platform, AppKit idioms on macOS, touch-first on iPadOS</div>
                             </div>
-                            <div class="layer-parts"><span class="arch-chip">PyWebView</span><span class="arch-chip">HTML/CSS/JS</span></div>
+                            <div class="layer-parts"><span class="arch-chip">SwiftUI</span><span class="arch-chip">AppKit / UIKit</span></div>
                           </div>
                           <div class="arch-arrow">↓ drives</div>
                           <div class="arch-layer">
                             <div>
-                              <div class="layer-name">Application layer</div>
-                              <div class="layer-desc">Flask routes for library logic, reading progress, and stats</div>
+                              <div class="layer-name">Shared core</div>
+                              <div class="layer-desc">Folder scanner, reading-order engine, and library logic, used identically by both apps</div>
                             </div>
-                            <div class="layer-parts"><span class="arch-chip">Flask</span><span class="arch-chip">Python</span></div>
+                            <div class="layer-parts"><span class="arch-chip">Swift</span><span class="arch-chip">Shared package</span></div>
                           </div>
                           <div class="arch-arrow">↓ reads / writes</div>
                           <div class="arch-layer">
                             <div>
                               <div class="layer-name">Data layer</div>
-                              <div class="layer-desc">Library database and thumbnail cache on disk</div>
+                              <div class="layer-desc">Library database and thumbnail cache on disk, no server, no sync</div>
                             </div>
-                            <div class="layer-parts"><span class="arch-chip">SQLite</span><span class="arch-chip">Thumbnail cache</span></div>
+                            <div class="layer-parts"><span class="arch-chip">SQLite (C API)</span><span class="arch-chip">Local disk</span></div>
                           </div>
                           <div class="arch-arrow">↓ parses</div>
                           <div class="arch-layer">
@@ -651,13 +673,13 @@
                             <div class="layer-parts"><span class="arch-chip">CBZ</span><span class="arch-chip">CBR</span><span class="arch-chip">PDF</span></div>
                           </div>
                         </div>
-                        <p class="case-block-note">The scanner is the part that took the longest to get right. It walks
-                        your comics folder, reads embedded metadata where it's available, generates and caches thumbnails,
-                        and writes everything into SQLite before anything shows up in the library. CBZ and PDF are
-                        straightforward since standard tooling handles them directly; CBR needed extra plumbing since it's
-                        a proprietary compression format, so it goes through a dedicated unpacking step before pages ever
-                        reach the reader. Doing that scan naively against a few thousand issues locks up the interface for
-                        minutes, so the current version batches the work and reports progress instead of freezing.</p>
+                        <p class="case-block-note">The scanner is still the part that took the longest to get right. On
+                        macOS it watches the comics folder live through FSEvents; on iPad, which has no background
+                        file-watching, it rescans when the app comes to the foreground. Both read embedded metadata where
+                        it's available, generate and cache thumbnails, and write everything into SQLite before anything
+                        shows up in the library. CBZ and PDF are handled directly; CBR is a proprietary compression
+                        format, so it unpacks through a bundled copy of unar (the engine behind The Unarchiver) before
+                        pages ever reach the reader, macOS only, since iOS's sandbox has no shell access to run it.</p>
                       </div>
                     </div>
                     <div class="case-block">
@@ -673,20 +695,23 @@
                             something else, since nothing about it depends on a server staying online.</p>
                           </div>
                           <div class="tradeoff-row">
-                            <p><strong>PyWebView over Electron.</strong> Electron bundles an entire Chromium instance just
-                            to render a UI. PyWebView uses the system's own WebView instead, so the packaged app stays
-                            smaller and starts faster, without shipping a browser inside a browser.</p>
+                            <p><strong>Genuinely native, over a wrapped web view.</strong> My first prototype rendered
+                            the interface through a Python backend and a system web view. Fast to build, but it never
+                            quite felt like a Mac app, and there was no real path to an iPad app without starting the
+                            interface over anyway. Rebuilding in SwiftUI cost me a full rewrite, but it's the only way to
+                            get real keyboard shortcuts, full VoiceOver, native drag-and-drop, and one shared core running
+                            on two platforms instead of one.</p>
                           </div>
                           <div class="tradeoff-row">
-                            <p><strong>Thumbnail caching layer.</strong> The first version re-rendered every cover on every
-                            scroll, which was fine for 40 comics and unusable for 4,000. Caching thumbnails ahead of time is
-                            the entire difference between instant and "why is this hanging."</p>
+                            <p><strong>Thumbnail caching layer.</strong> The first prototype re-rendered every cover on
+                            every scroll, which was fine for 40 comics and unusable for 4,000. Caching thumbnails ahead
+                            of time on disk is the entire difference between instant and "why is this hanging."</p>
                           </div>
                           <div class="tradeoff-row">
-                            <p><strong>PyInstaller over asking people to install Python.</strong> Nobody wants to open a
-                            terminal and run a package manager before reading a comic. Packaging as a self-contained app
-                            means it just launches, at the cost of a larger download and a slower rebuild loop whenever the
-                            bundle needs regenerating.</p>
+                            <p><strong>Sparkle over the App Store, for now.</strong> Signing, notarizing, and
+                            auto-updating outside the App Store means I can ship fixes fast while the iPad app is still
+                            catching up to macOS, at the cost of a Gatekeeper warning on first launch until notarization
+                            is fully in place.</p>
                           </div>
                           <div class="tradeoff-row">
                             <p><strong>Folder structure over manual tagging.</strong> ComicArc reads what it can from how
@@ -694,9 +719,9 @@
                             hand. Less setup, and it respects an organization system collectors already have.</p>
                           </div>
                           <div class="tradeoff-row">
-                            <p><strong>SQLite over a client-server database.</strong> Zero setup, ships as a single file,
-                            no server process for a desktop app to babysit. It installs and just works instead of asking
-                            anyone to configure something they'll never think about again.</p>
+                            <p><strong>SQLite over a client-server database.</strong> Zero setup, ships as part of the
+                            app, no server process for a desktop or tablet app to babysit. It installs and just works
+                            instead of asking anyone to configure something they'll never think about again.</p>
                           </div>
                           <div class="tradeoff-row">
                             <p><strong>macOS Gatekeeper signing, imperfect as it still is.</strong> Distributing outside the
@@ -710,48 +735,49 @@
                     <div class="case-block">
                       <div class="case-block-label">Behind the scenes</div>
                       <div class="case-block-body">
-                        <p>The first version of ComicArc was basically a folder browser with covers on it. No cache, no
-                        index, just reading files off disk every time you scrolled. It worked fine for the 40 comics I
-                        tested with. Then I pointed it at my actual collection and watched it choke.</p>
-                        <p>That's when I realized the real problem was never "display a comic." It was "index and cache
-                        thousands of them without making the user wait." So I tore out the file-browsing logic and rebuilt
-                        around a proper SQLite index with a thumbnail cache sitting in front of it. Slower to build. Much
-                        faster to use. I'd rather find that out in week two than after someone else finds it for me.</p>
-                        <p>The metadata parser went through a similar rebuild. My first pass trusted the metadata embedded in
-                        each file, which turned out to be inconsistent or missing across a huge chunk of real-world comics.
-                        The current version treats embedded metadata as a hint, not a source of truth, and falls back to
-                        filename parsing and manual correction when it's wrong.</p>
+                        <p>The very first version of ComicArc wasn't Swift at all. I prototyped it in Python: a Flask
+                        backend, SQLite, and a system web view wrapping the whole thing, because that stack let me go
+                        from an idea to a working screen in a single weekend. It proved the concept was worth building,
+                        and it also proved its own ceiling. A web view never quite feels native, there was no path to an
+                        iPad app without starting over anyway, and things like full VoiceOver support and real keyboard
+                        shortcuts are much harder to bolt onto a web UI after the fact than to design in from the start.</p>
+                        <p>So I rebuilt it. Same product, same folder-first philosophy, entirely new foundation: SwiftUI,
+                        AppKit, and UIKit, with one shared Swift core for the database, scanner, and reading-order logic
+                        instead of two separate implementations down the line. Slower to get back to feature parity. Much
+                        stronger foundation to keep building on, and the only way to genuinely support both macOS and
+                        iPadOS from one codebase instead of maintaining two.</p>
                       </div>
                     </div>
                     <div class="case-block">
                       <div class="case-block-label">What I learned</div>
                       <div class="case-block-body">
-                        <p>How much of "engineering" is actually tradeoff management. Choosing a lightweight, web-wrapped
-                        desktop stack over a heavier native toolkit meant trading some platform polish for speed of
-                        iteration, and I'd make that trade again for how fast it let me go from idea to a working screen.
-                        Scope discipline turned out to be a product skill, not just a project-management one. The features
-                        I chose <em>not</em> to build kept the reader fast enough to feel worth switching to. The feature
-                        I'm proudest of is one nobody will ever screenshot: thumbnail caching isn't glamorous, but it's the
-                        entire difference between ComicArc feeling instant and feeling like every bloated reader I built
-                        it to replace. Invisible work is still work.</p>
+                        <p>That a prototype's job is to answer a question, not to become the product. Python and a web
+                        view answered "does this idea work" fast, and once the answer was yes, keeping that stack would
+                        have meant permanently capping what the app could feel like and where it could run. Knowing when
+                        a rewrite is the right call, instead of just polishing the first version indefinitely, mattered
+                        more than any single feature. The feature I'm proudest of is still the least visible one: the
+                        reading-order engine placing an annual where it was actually published instead of where its
+                        filename happens to sort it. Nobody screenshots that. It's just quietly correct every time.</p>
                       </div>
                     </div>
                     <div class="case-block">
                       <div class="case-block-label">What I'd redesign today</div>
                       <div class="case-block-body">
-                        <p>How early I bolted on CBR support after already designing everything around CBZ and PDF. It
-                        works, but the seam between how those two formats are handled and how CBR is handled is more
-                        visible in the codebase than I'd like. If I started over, I'd design one unified format-handling
-                        layer from the first commit instead of adding formats one at a time.</p>
+                        <p>How long I waited to treat the offline comics database and the reading-order engine as one
+                        shared, platform-agnostic package from the start. Both ended up threaded through more of the
+                        codebase than they needed to be because I added the reasoning behind them incrementally. If I
+                        started the Swift rewrite over, I'd design that shared logic layer first and build the interface
+                        on top of it, instead of the other way around.</p>
                       </div>
                     </div>
                     <div class="case-block">
                       <div class="case-block-label">Where it's going next</div>
                       <div class="case-block-body">
-                        <p>Right now, getting ComicArc means downloading a release from GitHub and clearing a Gatekeeper
-                        quarantine flag once. Smoothing out that first-run experience, and properly notarizing future
-                        builds, is the next real milestone. Beyond that, more of the reading-stats and reading-order
-                        tooling that's already in the app, since that's the part I keep using myself the most.</p>
+                        <p>iPadOS support is real today, but it still builds from Xcode rather than shipping through the
+                        App Store, since it's newer than the macOS app and I'm still hardening it against real, messy
+                        libraries the way macOS already has been. Getting ComicArcPad onto the App Store is the next real
+                        milestone, alongside finishing full notarization for macOS so the first-launch Gatekeeper warning
+                        goes away entirely.</p>
                       </div>
                     </div>
                   </div>
@@ -764,33 +790,35 @@
                           <div class="mini-timeline-item">
                             <div class="dot-col"><span class="dot"></span><span class="stem"></span></div>
                             <div class="when">Early on</div>
-                            <div class="what"><strong>First working prototype.</strong> A flat folder browser, no cache, no
-                            index. Fine for a small test library, fell apart the moment I pointed it at my real one.</div>
+                            <div class="what"><strong>First working prototype.</strong> A Python and Flask backend behind
+                            a system web view, proving the idea, a folder-first, offline comic library, was worth
+                            building at all.</div>
                           </div>
                           <div class="mini-timeline-item">
                             <div class="dot-col"><span class="dot"></span><span class="stem"></span></div>
-                            <div class="when">The rewrite</div>
-                            <div class="what"><strong>Rebuilt around Flask, SQLite, and PyWebView.</strong> A real backend,
-                            a proper database schema, a scanner, and a thumbnail caching pipeline, then packaged with
-                            PyInstaller so it runs as a standalone macOS app.</div>
+                            <div class="when">The pivot</div>
+                            <div class="what"><strong>Rebuilt natively in Swift.</strong> Same product, entirely new
+                            foundation: SwiftUI, AppKit, and UIKit on top of one shared Swift core for the database,
+                            scanner, and reading-order engine.</div>
                           </div>
                           <div class="mini-timeline-item">
                             <div class="dot-col"><span class="dot"></span><span class="stem"></span></div>
-                            <div class="when">Right after</div>
-                            <div class="what"><strong>Duplicate detection, shelves, and tags,</strong> plus a hardening
-                            pass on scanning edge cases that only showed up once I pointed it at a real, messy collection.</div>
+                            <div class="when">Through the rewrite</div>
+                            <div class="what"><strong>Reading Paths, Diary, Tier Lists, and Favorite Moments,</strong>
+                            plus the offline comics database and Fix Match picker, all built on the new native
+                            foundation.</div>
                           </div>
                           <div class="mini-timeline-item">
                             <div class="dot-col"><span class="dot"></span><span class="stem"></span></div>
-                            <div class="when">Same push</div>
-                            <div class="what"><strong>Reading Orders, stats, and streaks,</strong> including the by-publisher
-                            breakdown and yearly reading goal that now live on the Statistics page.</div>
+                            <div class="when">Same stretch</div>
+                            <div class="what"><strong>iPadOS support,</strong> sharing the same core as macOS, plus six
+                            themes, full VoiceOver, and real keyboard shortcuts on both platforms.</div>
                           </div>
                           <div class="mini-timeline-item">
                             <div class="dot-col"><span class="dot"></span></div>
-                            <div class="when">Just now</div>
-                            <div class="what"><strong>Rewrote the README</strong> so it documents what actually shipped
-                            instead of what the app used to be.</div>
+                            <div class="when">Just shipped</div>
+                            <div class="what"><strong>v1.0.0,</strong> tagged, signed, and released with Sparkle
+                            auto-updates and a GitHub Actions build pipeline.</div>
                           </div>
                         </div>
                       </div>
@@ -807,25 +835,24 @@
                         of them solved all three problems at once.</div>
                       </details>
                       <details class="faq-item">
-                        <summary>Why Python and Flask instead of a fully native app?</summary>
-                        <div class="faq-a">Speed of iteration, mostly. I already knew Python well, and Flask plus PyWebView
-                        let me go from an idea to a working screen the same day instead of learning an entirely new toolkit
-                        first. The tradeoff is a UI that's HTML and CSS underneath instead of fully native widgets, but
-                        PyWebView still renders through the system's own WebView rather than a bundled browser, so it
-                        stays lighter than an Electron app would.</div>
+                        <summary>Is ComicArc a fully native app?</summary>
+                        <div class="faq-a">Yes, 100% SwiftUI on top of AppKit and UIKit today. It started as a Python and
+                        Flask prototype behind a system web view, which was the fastest way to validate the idea, but I
+                        rebuilt it natively once the concept proved out, mainly to get real keyboard shortcuts, full
+                        VoiceOver support, and a genuine iPad app out of one shared core.</div>
                       </details>
                       <details class="faq-item">
                         <summary>Does ComicArc ever upload my library anywhere?</summary>
-                        <div class="faq-a">No. The library database and thumbnail cache live entirely on your machine.
-                        Your comic files themselves are never moved, renamed, or modified. There's no account system and
-                        no server for any of it to talk to even if it wanted to.</div>
+                        <div class="faq-a">No. The library database and thumbnail cache live entirely on your device.
+                        Your comic files themselves are never moved, renamed, or modified unless you use the Rename Files
+                        tool. There's no account system and no server for any of it to talk to even if it wanted to.</div>
                       </details>
                       <details class="faq-item">
                         <summary>What platforms does it support?</summary>
-                        <div class="faq-a">macOS only right now, packaged as a standalone app so there's nothing else to
-                        install. Windows and Linux aren't ruled out, since the stack isn't tied to Apple hardware the way
-                        a fully native app would be, but macOS is where I use it daily, so that's where the polish has
-                        gone first.</div>
+                        <div class="faq-a">macOS and iPadOS. They share one core but keep entirely separate local
+                        libraries, there's no sync between them yet. The macOS app is a signed release available now;
+                        the iPad app, ComicArcPad, currently builds from Xcode rather than shipping through the App
+                        Store, since it's newer and still catching up to macOS.</div>
                       </details>
                       <details class="faq-item">
                         <summary>It says "ComicArc is damaged and can't be opened." Is it actually broken?</summary>
@@ -1278,19 +1305,19 @@
               </div>
 
               <div class="chip-group">
-                <div class="chip-group-label">Proven in ComicArc &mdash; native macOS app</div>
+                <div class="chip-group-label">Proven in ComicArc, native macOS and iPadOS app</div>
                 <div class="strengths-row">
-                  <span class="strength-tag">Python</span>
-                  <span class="strength-tag">Flask</span>
+                  <span class="strength-tag">Swift</span>
+                  <span class="strength-tag">SwiftUI</span>
+                  <span class="strength-tag">AppKit &amp; UIKit</span>
                   <span class="strength-tag">SQLite</span>
-                  <span class="strength-tag">PyWebView</span>
-                  <span class="strength-tag">PyInstaller</span>
+                  <span class="strength-tag">Xcode</span>
                   <span class="strength-tag">Git &amp; GitHub</span>
                 </div>
               </div>
 
               <div class="chip-group">
-                <div class="chip-group-label">Proven in Reel Talk Hub &mdash; media business &amp; website</div>
+                <div class="chip-group-label">Proven in Reel Talk Hub, media business &amp; website</div>
                 <div class="strengths-row">
                   <span class="strength-tag">HTML</span>
                   <span class="strength-tag">CSS</span>
@@ -1305,7 +1332,7 @@
               </div>
 
               <div class="chip-group">
-                <div class="chip-group-label">Also comfortable with &mdash; from coursework &amp; research</div>
+                <div class="chip-group-label">Also comfortable with, from coursework &amp; research</div>
                 <div class="strengths-row">
                   <span class="strength-tag">SQL</span>
                   <span class="strength-tag">R</span>
