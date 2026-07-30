@@ -355,6 +355,13 @@ section { position: relative; }
   background: var(--accent-dim);
   padding-left: 20px;
 }
+.side-menu-links a.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+.side-menu-links a.active .side-menu-num {
+  color: var(--accent);
+}
 .side-menu-num {
   font-family: var(--mono);
   font-size: 12px;

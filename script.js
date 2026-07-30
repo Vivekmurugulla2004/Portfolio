@@ -82,6 +82,64 @@ if (menuToggle && sideMenu && menuOverlay) {
 }
 
 // ---------------------------------------------------------------
+// Side menu: highlight whichever section is currently in view, so the
+// menu still orients you after you've scrolled deep into a section.
+// Accordion sections collapse down to just their header when closed, so
+// this tracks scroll position directly (last header to cross a fixed
+// line near the top) rather than intersection area, which would favor
+// whichever short collapsed header happens to overlap a band the most.
+// ---------------------------------------------------------------
+if (sideMenu) {
+  const sideMenuLinks = Array.from(sideMenu.querySelectorAll(".side-menu-links a"));
+  const sections = sideMenuLinks
+    .map((link) => document.getElementById(link.getAttribute("href").slice(1)))
+    .filter(Boolean);
+
+  if (sections.length) {
+    const setActiveLink = (id) => {
+      sideMenuLinks.forEach((link) => {
+        const isActive = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("active", isActive);
+        if (isActive) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    const LINE = 96; // just below the fixed nav
+    let activeSectionTicking = false;
+    function updateActiveSection() {
+      // Whichever header sits closest to LINE "wins". A strict "last header
+      // to cross LINE" rule breaks near the bottom of a short, all-collapsed
+      // page: there's often not enough content left below a section to ever
+      // scroll its header up that far, so it'd get stuck showing whatever
+      // came before as active even after you've navigated past it.
+      let current = sections[0];
+      let bestDistance = Infinity;
+      for (const section of sections) {
+        const distance = Math.abs(section.getBoundingClientRect().top - LINE);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          current = section;
+        }
+      }
+      setActiveLink(current.id);
+      activeSectionTicking = false;
+    }
+    scrollArea.addEventListener(
+      "scroll",
+      () => {
+        if (!activeSectionTicking) {
+          requestAnimationFrame(updateActiveSection);
+          activeSectionTicking = true;
+        }
+      },
+      { passive: true }
+    );
+    updateActiveSection();
+  }
+}
+
+// ---------------------------------------------------------------
 // Resume preview modal: every "View Resume" / "Resume" link opens an
 // inline preview instead of forcing a download; the modal itself still
 // offers an explicit Download PDF action for anyone who wants the file.
@@ -331,26 +389,64 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     const section = document.getElementById(id);
     if (!section || !section.classList.contains("accordion-item")) return;
     const header = section.querySelector(":scope > .accordion-header");
-    if (header) setSectionOpen(header, true);
+    if (!header) return;
+    const panel = getPanelFor(header);
+    const alreadyOpen = panel && panel.classList.contains("open");
+    setSectionOpen(header, true);
+
+    // The native anchor scroll fires before the accordion's own expand
+    // transition has added its content height, so for a section late in
+    // the page (little content below it to begin with) the scroll can
+    // land short of actually showing it. Once the panel finishes
+    // expanding, nudge the scroll position to make sure it's in view.
+    // Skip this if the section was already open: no transition will fire
+    // to clean the listener up since there's no state change to animate.
+    if (!panel || alreadyOpen) return;
+    const resync = (e) => {
+      if (e.target !== panel || e.propertyName !== "grid-template-rows") return;
+      panel.removeEventListener("transitionend", resync);
+      section.scrollIntoView({ block: "start", behavior: scrollBehavior });
+    };
+    panel.addEventListener("transitionend", resync);
   });
 });
 
 // ---------------------------------------------------------------
 // Project card tabs (scoped per project sub-card, since ComicArc and
 // Reel Talk Hub each hold their own independent tab set within the
-// same Projects accordion section)
+// same Projects accordion section). Follows the WAI-ARIA tabs pattern:
+// only the active tab is in the focus order, arrow keys move between
+// tabs, Home/End jump to the first/last.
 // ---------------------------------------------------------------
 document.querySelectorAll(".project-subcard").forEach((card) => {
-  const btns = card.querySelectorAll(".tab-btn");
+  const btns = Array.from(card.querySelectorAll(".tab-btn"));
   const panels = card.querySelectorAll(".tab-panel");
-  btns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      btns.forEach((b) => b.classList.remove("active"));
-      panels.forEach((p) => p.classList.remove("active"));
-      btn.classList.add("active");
-      const panel = card.querySelector(`.tab-panel[data-panel="${btn.dataset.tab}"]`);
-      if (panel) panel.classList.add("active");
-      btn.scrollIntoView({ block: "nearest", inline: "center", behavior: scrollBehavior });
+
+  const activate = (btn, { focus = false, scroll = true } = {}) => {
+    btns.forEach((b) => {
+      const selected = b === btn;
+      b.classList.toggle("active", selected);
+      b.setAttribute("aria-selected", String(selected));
+      b.tabIndex = selected ? 0 : -1;
+    });
+    panels.forEach((p) => p.classList.remove("active"));
+    const panel = card.querySelector(`.tab-panel[data-panel="${btn.dataset.tab}"]`);
+    if (panel) panel.classList.add("active");
+    if (focus) btn.focus();
+    if (scroll) btn.scrollIntoView({ block: "nearest", inline: "center", behavior: scrollBehavior });
+  };
+
+  btns.forEach((btn, i) => {
+    btn.addEventListener("click", () => activate(btn));
+    btn.addEventListener("keydown", (e) => {
+      let nextIndex = null;
+      if (e.key === "ArrowRight") nextIndex = (i + 1) % btns.length;
+      else if (e.key === "ArrowLeft") nextIndex = (i - 1 + btns.length) % btns.length;
+      else if (e.key === "Home") nextIndex = 0;
+      else if (e.key === "End") nextIndex = btns.length - 1;
+      if (nextIndex === null) return;
+      e.preventDefault();
+      activate(btns[nextIndex], { focus: true });
     });
   });
 });
