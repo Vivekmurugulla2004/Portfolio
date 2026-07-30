@@ -189,10 +189,10 @@
       <span class="hero-role">HCI Researcher</span>
     </div>
     <div class="hero-stats reveal in reveal-delay-3">
-      <div class="hero-stat"><span class="num">100</span><span class="lbl">Core Web Vitals score</span></div>
-      <div class="hero-stat"><span class="num">50+</span><span class="lbl">Studies synthesized in HCI research</span></div>
-      <div class="hero-stat"><span class="num">3</span><span class="lbl">Years operating Reel Talk Hub</span></div>
-      <div class="hero-stat"><span class="num">228+</span><span class="lbl">Commits shipped solo</span></div>
+      <div class="hero-stat"><span class="num" data-count="100">0</span><span class="lbl">Core Web Vitals score</span></div>
+      <div class="hero-stat"><span class="num" data-count="50" data-suffix="+">0</span><span class="lbl">Studies synthesized in HCI research</span></div>
+      <div class="hero-stat"><span class="num" data-count="3">0</span><span class="lbl">Years operating Reel Talk Hub</span></div>
+      <div class="hero-stat"><span class="num" data-count="228" data-suffix="+">0</span><span class="lbl">Commits shipped solo</span></div>
     </div>
     <div class="hero-actions reveal in reveal-delay-3">
       <a href="#projects" class="btn btn-primary">
@@ -501,7 +501,7 @@
                 </button>
                 <div class="accordion-panel" id="panel-comicarc">
                 <div class="accordion-panel-inner">
-                <div class="accordion-panel-content">
+                <div class="accordion-panel-content project-subcard">
 
                 <div class="case-actions">
                   <a href="https://github.com/ComicArc/ComicArc/releases/latest" target="_blank" rel="noopener" class="btn btn-primary">
@@ -522,16 +522,16 @@
                 </div>
 
                 <div class="tabs-nav" role="tablist" aria-label="ComicArc details">
-                  <button type="button" class="tab-btn active" data-tab="ca-overview">Overview</button>
-                  <button type="button" class="tab-btn" data-tab="ca-features">Features</button>
-                  <button type="button" class="tab-btn" data-tab="ca-build">How It's Built</button>
-                  <button type="button" class="tab-btn" data-tab="ca-timeline">Timeline</button>
-                  <button type="button" class="tab-btn" data-tab="ca-faq">Questions</button>
+                  <button type="button" id="tab-ca-overview" class="tab-btn active" data-tab="ca-overview" role="tab" aria-selected="true" aria-controls="panel-ca-overview">Overview</button>
+                  <button type="button" id="tab-ca-features" class="tab-btn" data-tab="ca-features" role="tab" aria-selected="false" aria-controls="panel-ca-features" tabindex="-1">Features</button>
+                  <button type="button" id="tab-ca-build" class="tab-btn" data-tab="ca-build" role="tab" aria-selected="false" aria-controls="panel-ca-build" tabindex="-1">How It's Built</button>
+                  <button type="button" id="tab-ca-timeline" class="tab-btn" data-tab="ca-timeline" role="tab" aria-selected="false" aria-controls="panel-ca-timeline" tabindex="-1">Timeline</button>
+                  <button type="button" id="tab-ca-faq" class="tab-btn" data-tab="ca-faq" role="tab" aria-selected="false" aria-controls="panel-ca-faq" tabindex="-1">Questions</button>
                 </div>
 
                 <div class="tab-panels">
                   <!-- OVERVIEW -->
-                  <div class="tab-panel active" data-panel="ca-overview">
+                  <div class="tab-panel active" data-panel="ca-overview" id="panel-ca-overview" role="tabpanel" aria-labelledby="tab-ca-overview" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-label">Why I built it</div>
                       <div class="case-block-body">
@@ -563,7 +563,7 @@
                   </div>
 
                   <!-- FEATURES -->
-                  <div class="tab-panel" data-panel="ca-features">
+                  <div class="tab-panel" data-panel="ca-features" id="panel-ca-features" role="tabpanel" aria-labelledby="tab-ca-features" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-label">Library</div>
                       <div class="case-block-body">
@@ -624,7 +624,7 @@
                   </div>
 
                   <!-- BUILD -->
-                  <div class="tab-panel" data-panel="ca-build">
+                  <div class="tab-panel" data-panel="ca-build" id="panel-ca-build" role="tabpanel" aria-labelledby="tab-ca-build" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-label">What it actually took</div>
                       <div class="case-block-body">
@@ -787,7 +787,7 @@
                   </div>
 
                   <!-- TIMELINE -->
-                  <div class="tab-panel" data-panel="ca-timeline">
+                  <div class="tab-panel" data-panel="ca-timeline" id="panel-ca-timeline" role="tabpanel" aria-labelledby="tab-ca-timeline" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-body full-span">
                         <div class="mini-timeline">
@@ -830,7 +830,7 @@
                   </div>
 
                   <!-- QUESTIONS -->
-                  <div class="tab-panel" data-panel="ca-faq">
+                  <div class="tab-panel" data-panel="ca-faq" id="panel-ca-faq" role="tabpanel" aria-labelledby="tab-ca-faq" tabindex="0">
                     <div class="faq-list">
                       <details class="faq-item">
                         <summary>Why not just use an existing comic reader?</summary>
@@ -905,7 +905,7 @@
                 </button>
                 <div class="accordion-panel" id="panel-reeltalkhub">
                 <div class="accordion-panel-inner">
-                <div class="accordion-panel-content">
+                <div class="accordion-panel-content project-subcard">
 
                 <div class="case-actions">
                   <a href="https://reeltalkhub.com/" target="_blank" rel="noopener" class="btn btn-primary">
@@ -916,16 +916,16 @@
                 </div>
 
                 <div class="tabs-nav" role="tablist" aria-label="Reel Talk Hub details">
-                  <button type="button" class="tab-btn active" data-tab="rt-overview">Overview</button>
-                  <button type="button" class="tab-btn" data-tab="rt-build">How It Runs</button>
-                  <button type="button" class="tab-btn" data-tab="rt-coverage">What I Cover</button>
-                  <button type="button" class="tab-btn" data-tab="rt-timeline">Timeline</button>
-                  <button type="button" class="tab-btn" data-tab="rt-faq">Questions</button>
+                  <button type="button" id="tab-rt-overview" class="tab-btn active" data-tab="rt-overview" role="tab" aria-selected="true" aria-controls="panel-rt-overview">Overview</button>
+                  <button type="button" id="tab-rt-build" class="tab-btn" data-tab="rt-build" role="tab" aria-selected="false" aria-controls="panel-rt-build" tabindex="-1">How It Runs</button>
+                  <button type="button" id="tab-rt-coverage" class="tab-btn" data-tab="rt-coverage" role="tab" aria-selected="false" aria-controls="panel-rt-coverage" tabindex="-1">What I Cover</button>
+                  <button type="button" id="tab-rt-timeline" class="tab-btn" data-tab="rt-timeline" role="tab" aria-selected="false" aria-controls="panel-rt-timeline" tabindex="-1">Timeline</button>
+                  <button type="button" id="tab-rt-faq" class="tab-btn" data-tab="rt-faq" role="tab" aria-selected="false" aria-controls="panel-rt-faq" tabindex="-1">Questions</button>
                 </div>
 
                 <div class="tab-panels">
                   <!-- OVERVIEW -->
-                  <div class="tab-panel active" data-panel="rt-overview">
+                  <div class="tab-panel active" data-panel="rt-overview" id="panel-rt-overview" role="tabpanel" aria-labelledby="tab-rt-overview" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-label">Why I built it</div>
                       <div class="case-block-body">
@@ -958,7 +958,7 @@
                   </div>
 
                   <!-- HOW IT RUNS -->
-                  <div class="tab-panel" data-panel="rt-build">
+                  <div class="tab-panel" data-panel="rt-build" id="panel-rt-build" role="tabpanel" aria-labelledby="tab-rt-build" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-label">What it actually takes</div>
                       <div class="case-block-body">
@@ -1059,7 +1059,7 @@
                   </div>
 
                   <!-- COVERAGE -->
-                  <div class="tab-panel" data-panel="rt-coverage">
+                  <div class="tab-panel" data-panel="rt-coverage" id="panel-rt-coverage" role="tabpanel" aria-labelledby="tab-rt-coverage" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-label">Reviews, across four mediums</div>
                       <div class="case-block-body">
@@ -1087,7 +1087,7 @@
                   </div>
 
                   <!-- TIMELINE -->
-                  <div class="tab-panel" data-panel="rt-timeline">
+                  <div class="tab-panel" data-panel="rt-timeline" id="panel-rt-timeline" role="tabpanel" aria-labelledby="tab-rt-timeline" tabindex="0">
                     <div class="case-block case-block--first">
                       <div class="case-block-body full-span">
                         <div class="mini-timeline">
@@ -1124,7 +1124,7 @@
                   </div>
 
                   <!-- QUESTIONS -->
-                  <div class="tab-panel" data-panel="rt-faq">
+                  <div class="tab-panel" data-panel="rt-faq" id="panel-rt-faq" role="tabpanel" aria-labelledby="tab-rt-faq" tabindex="0">
                     <div class="faq-list">
                       <details class="faq-item">
                         <summary>Is Reel Talk Hub a full-time job?</summary>
@@ -1424,10 +1424,10 @@
               then un-broken. Here's the measurable version of everything else on this page.</p>
 
               <div class="accomplishment-grid">
-                <div class="accomplishment-card"><span class="num">100</span><span class="lbl">Core Web Vitals score on Reel Talk Hub, reached through diagnosed, targeted engineering fixes</span></div>
-                <div class="accomplishment-card"><span class="num">15%</span><span class="lbl">Projected retention improvement from my segmentation model at Withme.AI</span></div>
-                <div class="accomplishment-card"><span class="num">50+</span><span class="lbl">Peer-reviewed studies synthesized during my HCI research assistantship</span></div>
-                <div class="accomplishment-card"><span class="num">228+</span><span class="lbl">Commits shipped on Reel Talk Hub's self-built site alone</span></div>
+                <div class="accomplishment-card"><span class="num" data-count="100">0</span><span class="lbl">Core Web Vitals score on Reel Talk Hub, reached through diagnosed, targeted engineering fixes</span></div>
+                <div class="accomplishment-card"><span class="num" data-count="15" data-suffix="%">0</span><span class="lbl">Projected retention improvement from my segmentation model at Withme.AI</span></div>
+                <div class="accomplishment-card"><span class="num" data-count="50" data-suffix="+">0</span><span class="lbl">Peer-reviewed studies synthesized during my HCI research assistantship</span></div>
+                <div class="accomplishment-card"><span class="num" data-count="228" data-suffix="+">0</span><span class="lbl">Commits shipped on Reel Talk Hub's self-built site alone</span></div>
               </div>
 
               <div class="subsection">
