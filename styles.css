@@ -499,6 +499,7 @@ section { position: relative; }
   width: 0%;
   background: linear-gradient(90deg, var(--accent), var(--blue));
   z-index: 1001;
+  pointer-events: none;
   transition: width 0.05s linear;
 }
 
@@ -1923,6 +1924,8 @@ footer {
 
 @media (max-width: 600px) {
   .container { padding: 0 20px; }
+  .nav-actions { display: none; }
+  .nav-logo { font-size: 13px; }
   .hero { padding-top: 48px; }
   .hero-meta { gap: 24px; }
   .hero-stats { gap: 22px 28px; margin-top: 28px; padding-top: 22px; }
@@ -1956,12 +1959,58 @@ footer {
   }
 }
 
-@media (max-width: 480px) {
-  .nav-actions { display: none; }
-  .nav-logo { font-size: 13px; }
-}
-
 @media (max-width: 420px) {
   .case-stats { grid-template-columns: 1fr; }
   .research-stats { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+/* The screen layout lives entirely inside one clipped, internally-scrolled
+   container (body: height:100vh + overflow:hidden; .scroll-area handles
+   the actual scrolling) so there's a single real scrollbar instead of one
+   for the whole document. Printed as-is, that clipping caps the output at
+   a single page containing whatever the hero showed. This unrolls it: the
+   scroll container becomes a normal flowing block, every accordion panel
+   and tab renders open regardless of on-screen state (there's no way to
+   click through panels on paper), and anything purely interactive
+   (nav controls, menu, modals, carousel dots, decorative overlays) drops
+   out since none of it does anything on a printed page. */
+@media print {
+  .grain, .ambient-bg, .glow-field, .progress-bar, .skip-link,
+  .side-menu, .menu-overlay, .resume-modal, .resume-modal-overlay,
+  .scroll-cue, .carousel-dots, .menu-toggle, .nav-actions,
+  .hero-actions, .accordion-chevron, .accordion-icon, .tabs-nav {
+    display: none !important;
+  }
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .scroll-area {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .nav { position: static !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .accordion-panel {
+    grid-template-rows: 1fr !important;
+  }
+  .accordion-panel-inner { overflow: visible !important; }
+  .accordion-header { cursor: default; }
+  .tab-panel { display: block !important; }
+  .tab-panels { display: block !important; }
+  /* These are horizontally-scrolling strips on screen; a printed page
+     can't scroll, so let them wrap instead of clipping the cards that
+     would otherwise be off to the right. */
+  .carousel-track {
+    overflow: visible !important;
+    flex-wrap: wrap !important;
+  }
+  .lifecycle-scroll { overflow: visible !important; }
+  .lifecycle {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
 }

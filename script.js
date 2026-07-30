@@ -75,8 +75,28 @@ if (menuToggle && sideMenu && menuOverlay) {
     a.addEventListener("click", () => setMenuOpen(false))
   );
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && sideMenu.classList.contains("open")) {
+    if (!sideMenu.classList.contains("open")) return;
+    if (e.key === "Escape") {
       setMenuOpen(false);
+      return;
+    }
+    // Trap focus inside the drawer while it's open: without this, tabbing
+    // past the last link lands on background page content that's covered
+    // by the overlay but was never actually removed from the tab order.
+    if (e.key === "Tab") {
+      const focusable = Array.from(sideMenu.querySelectorAll("a, button")).filter(
+        (el) => el.offsetParent !== null
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 }
@@ -166,7 +186,22 @@ if (resumeModal && resumeModalOverlay && resumeModalClose && resumeModalFrame &&
     scrollArea.style.overflow = open ? "hidden" : "";
     if (open) {
       resumePreviouslyFocused = document.activeElement;
-      resumeModalClose.focus();
+      // resumeModal's visibility is CSS-transitioned, and a browser won't
+      // focus an element it still considers hidden. Even listening for
+      // transitionend isn't fully reliable: it can fire a frame before the
+      // browser's focus machinery actually treats the element as visible
+      // (most noticeable under prefers-reduced-motion's near-zero
+      // durations). Retrying across a few animation frames sidesteps the
+      // exact timing rather than depending on it.
+      let attempts = 0;
+      const tryFocus = () => {
+        resumeModalClose.focus();
+        attempts += 1;
+        if (document.activeElement !== resumeModalClose && attempts < 10) {
+          requestAnimationFrame(tryFocus);
+        }
+      };
+      tryFocus();
     } else if (resumePreviouslyFocused instanceof HTMLElement) {
       resumePreviouslyFocused.focus();
     }
@@ -174,6 +209,11 @@ if (resumeModal && resumeModalOverlay && resumeModalClose && resumeModalFrame &&
 
   resumeTriggers.forEach((trigger) => {
     trigger.addEventListener("click", (e) => {
+      // Cmd/Ctrl/Shift+click is a "open in new tab/window" request. Chrome
+      // honors that regardless of preventDefault, so blocking it here just
+      // pops the modal open on top of the page the user was already on,
+      // on top of the new tab they actually asked for.
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
       e.preventDefault();
       setResumeOpen(true);
     });
@@ -181,8 +221,30 @@ if (resumeModal && resumeModalOverlay && resumeModalClose && resumeModalFrame &&
   resumeModalClose.addEventListener("click", () => setResumeOpen(false));
   resumeModalOverlay.addEventListener("click", () => setResumeOpen(false));
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && resumeModal.classList.contains("open")) {
+    if (!resumeModal.classList.contains("open")) return;
+    if (e.key === "Escape") {
       setResumeOpen(false);
+      return;
+    }
+    // Same focus-trap reasoning as the side menu. The iframe's own PDF
+    // viewer has internal tab stops the parent page can't observe or
+    // intercept, so this only guards the boundary between the two real
+    // buttons -- the common case of a keyboard user not diving into the
+    // embedded viewer's own controls.
+    if (e.key === "Tab") {
+      const focusable = Array.from(resumeModal.querySelectorAll("a, button")).filter(
+        (el) => el.offsetParent !== null
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 }
@@ -191,7 +253,7 @@ if (resumeModal && resumeModalOverlay && resumeModalClose && resumeModalFrame &&
 // Cursor-follow glow field (rAF-throttled)
 // ---------------------------------------------------------------
 const glowField = document.getElementById("glowField");
-if (glowField && window.matchMedia("(pointer: fine)").matches) {
+if (glowField && window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion) {
   let mouseTicking = false;
   let lastMouseX = 0;
   let lastMouseY = 0;
@@ -236,6 +298,10 @@ revealEls.forEach((el) => revealObserver.observe(el));
 function animateCount(el) {
   const target = parseInt(el.dataset.count, 10);
   const suffix = el.dataset.suffix || "";
+  if (prefersReducedMotion) {
+    el.textContent = target + suffix;
+    return;
+  }
   const duration = 1200;
   const start = performance.now();
 
@@ -277,15 +343,19 @@ if (vitalsCircle && vitalsNum) {
           vitalsCircle.style.strokeDashoffset =
             circumference - (target / 100) * circumference;
 
-          const start = performance.now();
-          const duration = 1400;
-          function tick(now) {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            vitalsNum.textContent = Math.round(eased * target);
-            if (progress < 1) requestAnimationFrame(tick);
+          if (prefersReducedMotion) {
+            vitalsNum.textContent = target;
+          } else {
+            const start = performance.now();
+            const duration = 1400;
+            function tick(now) {
+              const progress = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              vitalsNum.textContent = Math.round(eased * target);
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
           }
-          requestAnimationFrame(tick);
           gaugeObserver.unobserve(entry.target);
         }
       });
@@ -381,35 +451,44 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
   });
 });
 
+// Opens the accordion section matching a #hash, if there is one, and
+// resyncs the scroll position once its expand transition finishes (the
+// native anchor scroll fires before the transition has added the extra
+// content height, so it can otherwise land short for a section late in
+// the page). Shared by in-page link clicks, a hash already present on
+// load, and back/forward navigation between hash states -- a bookmarked,
+// shared, or history-navigated link should work exactly like a click.
+function openSectionFromHash(id) {
+  const section = document.getElementById(id);
+  if (!section || !section.classList.contains("accordion-item")) return;
+  const header = section.querySelector(":scope > .accordion-header");
+  if (!header) return;
+  const panel = getPanelFor(header);
+  const alreadyOpen = panel && panel.classList.contains("open");
+  setSectionOpen(header, true);
+
+  // Skip the resync if the section was already open: no transition will
+  // fire to clean the listener up since there's no state change to animate.
+  if (!panel || alreadyOpen) return;
+  const resync = (e) => {
+    if (e.target !== panel || e.propertyName !== "grid-template-rows") return;
+    panel.removeEventListener("transitionend", resync);
+    section.scrollIntoView({ block: "start", behavior: scrollBehavior });
+  };
+  panel.addEventListener("transitionend", resync);
+}
+
 // Any in-page link that targets an accordion section opens it before the
 // browser's native smooth-scroll lands on it.
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", () => {
-    const id = link.getAttribute("href").slice(1);
-    const section = document.getElementById(id);
-    if (!section || !section.classList.contains("accordion-item")) return;
-    const header = section.querySelector(":scope > .accordion-header");
-    if (!header) return;
-    const panel = getPanelFor(header);
-    const alreadyOpen = panel && panel.classList.contains("open");
-    setSectionOpen(header, true);
-
-    // The native anchor scroll fires before the accordion's own expand
-    // transition has added its content height, so for a section late in
-    // the page (little content below it to begin with) the scroll can
-    // land short of actually showing it. Once the panel finishes
-    // expanding, nudge the scroll position to make sure it's in view.
-    // Skip this if the section was already open: no transition will fire
-    // to clean the listener up since there's no state change to animate.
-    if (!panel || alreadyOpen) return;
-    const resync = (e) => {
-      if (e.target !== panel || e.propertyName !== "grid-template-rows") return;
-      panel.removeEventListener("transitionend", resync);
-      section.scrollIntoView({ block: "start", behavior: scrollBehavior });
-    };
-    panel.addEventListener("transitionend", resync);
-  });
+  link.addEventListener("click", () => openSectionFromHash(link.getAttribute("href").slice(1)));
 });
+
+// A hash already in the URL on load (bookmark, shared link, refresh) or
+// reached via browser back/forward never fires a link click, so it needs
+// the same handling triggered separately.
+if (location.hash) openSectionFromHash(location.hash.slice(1));
+window.addEventListener("hashchange", () => openSectionFromHash(location.hash.slice(1)));
 
 // ---------------------------------------------------------------
 // Project card tabs (scoped per project sub-card, since ComicArc and
