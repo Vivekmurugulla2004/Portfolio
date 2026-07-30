@@ -491,46 +491,6 @@ if (location.hash) openSectionFromHash(location.hash.slice(1));
 window.addEventListener("hashchange", () => openSectionFromHash(location.hash.slice(1)));
 
 // ---------------------------------------------------------------
-// Project card tabs (scoped per project sub-card, since ComicArc and
-// Reel Talk Hub each hold their own independent tab set within the
-// same Projects accordion section). Follows the WAI-ARIA tabs pattern:
-// only the active tab is in the focus order, arrow keys move between
-// tabs, Home/End jump to the first/last.
-// ---------------------------------------------------------------
-document.querySelectorAll(".project-subcard").forEach((card) => {
-  const btns = Array.from(card.querySelectorAll(".tab-btn"));
-  const panels = card.querySelectorAll(".tab-panel");
-
-  const activate = (btn, { focus = false, scroll = true } = {}) => {
-    btns.forEach((b) => {
-      const selected = b === btn;
-      b.classList.toggle("active", selected);
-      b.setAttribute("aria-selected", String(selected));
-      b.tabIndex = selected ? 0 : -1;
-    });
-    panels.forEach((p) => p.classList.remove("active"));
-    const panel = card.querySelector(`.tab-panel[data-panel="${btn.dataset.tab}"]`);
-    if (panel) panel.classList.add("active");
-    if (focus) btn.focus();
-    if (scroll) btn.scrollIntoView({ block: "nearest", inline: "center", behavior: scrollBehavior });
-  };
-
-  btns.forEach((btn, i) => {
-    btn.addEventListener("click", () => activate(btn));
-    btn.addEventListener("keydown", (e) => {
-      let nextIndex = null;
-      if (e.key === "ArrowRight") nextIndex = (i + 1) % btns.length;
-      else if (e.key === "ArrowLeft") nextIndex = (i - 1 + btns.length) % btns.length;
-      else if (e.key === "Home") nextIndex = 0;
-      else if (e.key === "End") nextIndex = btns.length - 1;
-      if (nextIndex === null) return;
-      e.preventDefault();
-      activate(btns[nextIndex], { focus: true });
-    });
-  });
-});
-
-// ---------------------------------------------------------------
 // Swipeable carousels: dot indicators + click-to-scroll
 // ---------------------------------------------------------------
 document.querySelectorAll(".carousel").forEach((carousel) => {
