@@ -256,11 +256,11 @@ section { position: relative; }
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 13px;
   cursor: pointer;
   padding: 0;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
@@ -1826,11 +1826,15 @@ footer {
   cursor: pointer;
   transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
-/* Expands the touch/click target to ~36x36px without changing the visible dot size */
+/* Expands the touch/click target without changing the visible dot size. Capped
+   at -3px: dots sit on an 8px gap (16px center-to-center), so anything beyond
+   that starts overlapping the neighboring dot's hit area and can steal its
+   taps -- confirmed by hit-testing that the previous -14px let a tap on one
+   dot's own center land on the dot two slots over. */
 .carousel-dot::before {
   content: "";
   position: absolute;
-  inset: -14px;
+  inset: -3px;
 }
 .carousel-dot.active { background: var(--accent); transform: scale(1.35); }
 
