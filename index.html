@@ -20,7 +20,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23e0263f%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
 {
@@ -227,9 +229,6 @@
       </div>
     </div>
   </div>
-  <a href="#portfolio" class="scroll-cue reveal in reveal-delay-3" aria-label="Jump to portfolio">
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-  </a>
 </header>
 
 <main>
@@ -313,51 +312,6 @@
                     <li>Shipping something useful beats endlessly chasing perfection.</li>
                     <li>Curiosity is usually a better starting point than trends.</li>
                   </ul>
-                </div>
-              </div>
-
-              <div class="subsection">
-                <div class="subsection-head">
-                  <div class="subsection-label">My journey</div>
-                  <h4>How it's all connected.</h4>
-                  <p>Education, research, an internship, and two products I still run, overlapping rather than sequential.</p>
-                </div>
-                <div class="timeline">
-                  <div class="timeline-item milestone">
-                    <div class="timeline-date">Jan 2023</div>
-                    <h4>Started BBA, Management Information Systems</h4>
-                    <p>University of Georgia, Terry College of Business.</p>
-                  </div>
-                  <div class="timeline-item milestone">
-                    <div class="timeline-date">Feb 2023</div>
-                    <h4>Started Reel Talk Hub</h4>
-                    <p>Began as a personal movie-review writing exercise; has run continuously since.</p>
-                  </div>
-                  <div class="timeline-item">
-                    <div class="timeline-date">Jan 2025 – Mar 2025</div>
-                    <h4>Business Developer Intern, Withme.AI</h4>
-                    <p>Segmentation, engagement mapping, retention recommendations.</p>
-                  </div>
-                  <div class="timeline-item">
-                    <div class="timeline-date">Feb 2025 – Dec 2025</div>
-                    <h4>HCI Research Assistant, University of Georgia</h4>
-                    <p>Literature synthesis and experimental design on AI-driven persuasion.</p>
-                  </div>
-                  <div class="timeline-item milestone">
-                    <div class="timeline-date">Dec 2025</div>
-                    <h4>Graduated with a BBA, Management Information Systems</h4>
-                    <p>University of Georgia, Terry College of Business.</p>
-                  </div>
-                  <div class="timeline-item milestone">
-                    <div class="timeline-date">May 2026 – Present</div>
-                    <h4>Building ComicArc</h4>
-                    <p>Solo-developed native comic library and reader.</p>
-                  </div>
-                  <div class="timeline-item milestone">
-                    <div class="timeline-date">Aug 2026 – May 2027</div>
-                    <h4>MS, Business Analytics</h4>
-                    <p>University of Georgia, Terry College of Business. Expected graduation May 2027.</p>
-                  </div>
                 </div>
               </div>
 
@@ -668,8 +622,8 @@
                     </div>
                     <div class="pipeline-stage">
                       <span class="stage-tag">Recommendation</span>
-                      <p>Built a user segmentation framework for audience targeting and translated the analysis into
-                      clear, actionable recommendations for a non-technical stakeholder audience.</p>
+                      <p>Built a user segmentation framework for audience targeting, then translated it into clear
+                      recommendations for non-technical stakeholders.</p>
                     </div>
                     <div class="pipeline-stage">
                       <span class="stage-tag">Expected Impact</span>
@@ -907,9 +861,8 @@
                   <h4>Society for Management Information Systems (SMIS), UGA</h4>
                   <span class="leadership-when">Jan 2024 – Dec 2025</span>
                 </div>
-                <p>Participated in case-based workshops applying data analysis and information systems strategy to
-                real-world business problems. Collaborated on team projects involving data-driven problem-solving and
-                stakeholder-facing presentations, reinforcing cross-functional communication skills.</p>
+                <p>Collaborated on team projects involving data-driven problem-solving and stakeholder-facing
+                presentations, reinforcing cross-functional communication skills.</p>
               </div>
 
             </div>
@@ -924,7 +877,7 @@
           <div class="accordion-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6.5 12 13l9-6.5M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg></div>
           <div class="accordion-heading">
             <h3 class="text-gradient">Contact</h3>
-            <p class="accordion-teaser">Let's build something worth measuring. Open to software engineering, analytics, and product roles.</p>
+            <p class="accordion-teaser">Let's build something worth measuring.</p>
           </div>
           <svg aria-hidden="true" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>

@@ -306,10 +306,11 @@ section { position: relative; }
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform 0.4s var(--ease);
+  visibility: hidden;
+  transition: transform 0.4s var(--ease), visibility 0.4s var(--ease);
   box-shadow: var(--pop);
 }
-.side-menu.open { transform: translateX(0); }
+.side-menu.open { transform: translateX(0); visibility: visible; }
 
 .side-menu-head {
   display: flex;
@@ -761,36 +762,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   font-weight: 500;
 }
 
-.scroll-cue {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text-dim);
-  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
-}
-.scroll-cue:hover {
-  border-color: var(--border-strong);
-  color: var(--text);
-  transform: translateX(-50%) translateY(-2px);
-}
-.scroll-cue svg {
-  width: 18px;
-  height: 18px;
-  animation: cuebounce 1.8s infinite;
-}
-@keyframes cuebounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
-}
-
 /* ==========================================================================
    Why I Build
    ========================================================================== */
@@ -1170,47 +1141,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 }
 
 /* ==========================================================================
-   Timeline
-   ========================================================================== */
-
-
-.timeline {
-  position: relative;
-  margin-top: 56px;
-  padding-left: 32px;
-}
-.timeline::before {
-  content: "";
-  position: absolute;
-  left: 5px; top: 6px; bottom: 6px;
-  width: 1px;
-  background: linear-gradient(var(--border), var(--border) 90%, transparent);
-}
-.timeline-item {
-  position: relative;
-  padding-bottom: 44px;
-}
-.timeline-item:last-child { padding-bottom: 0; }
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -32px; top: 4px;
-  width: 11px; height: 11px;
-  border-radius: 50%;
-  background: var(--bg);
-  border: 2px solid var(--accent);
-}
-.timeline-item.milestone::before { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-dim); }
-.timeline-date {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--accent-bright);
-  margin-bottom: 6px;
-}
-.timeline-item h4 { font-size: 16.5px; font-weight: 600; }
-.timeline-item p { margin: 6px 0 0; color: var(--text-dim); font-size: 14px; line-height: 1.6; max-width: 560px; }
-
-/* ==========================================================================
    Ecosystem / skills + GitHub
    ========================================================================== */
 
@@ -1306,7 +1236,6 @@ footer {
 /* ---- small layout utilities ---- */
 .case-block--first { border-top: none; padding-top: 0; }
 .case-block-note { margin-top: 20px; }
-.full-span { grid-column: 1 / -1; }
 
 
 /* ==========================================================================
@@ -1327,7 +1256,7 @@ footer {
   border-radius: var(--radius-lg);
   box-shadow: var(--pop-soft);
   overflow: hidden;
-  scroll-margin-top: 24px;
+  scroll-margin-top: calc(var(--nav-h) + 16px);
   transition: box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .accordion-item:hover { box-shadow: var(--pop); }
@@ -1668,7 +1597,6 @@ footer {
     display: grid;
     gap: 20px;
   }
-  .carousel-track.cols-3 { grid-template-columns: repeat(3, 1fr); }
   .carousel-track.cols-2 { grid-template-columns: repeat(2, 1fr); }
   .carousel-track > * { flex: unset; }
   .carousel-dots { display: none; }
@@ -1743,7 +1671,7 @@ footer {
 @media print {
   .grain, .ambient-bg, .glow-field, .progress-bar, .skip-link,
   .side-menu, .menu-overlay, .resume-modal, .resume-modal-overlay,
-  .scroll-cue, .carousel-dots, .menu-toggle, .nav-actions,
+  .carousel-dots, .menu-toggle, .nav-actions,
   .hero-actions, .accordion-chevron, .accordion-icon {
     display: none !important;
   }

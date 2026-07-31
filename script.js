@@ -62,7 +62,22 @@ if (menuToggle && sideMenu && menuOverlay) {
     scrollArea.style.paddingRight = comp;
     if (open) {
       const firstLink = sideMenu.querySelector(".side-menu-links a");
-      if (firstLink) firstLink.focus();
+      // sideMenu is visibility-transitioned (see styles.css), and a browser
+      // won't focus an element it still considers hidden at the instant this
+      // runs. Retrying across a few animation frames sidesteps that race
+      // rather than depending on exact transition timing (same fix as the
+      // resume modal's tryFocus below).
+      if (firstLink) {
+        let attempts = 0;
+        const tryFocus = () => {
+          firstLink.focus();
+          attempts += 1;
+          if (document.activeElement !== firstLink && attempts < 10) {
+            requestAnimationFrame(tryFocus);
+          }
+        };
+        tryFocus();
+      }
     } else {
       menuToggle.focus();
     }
@@ -171,7 +186,12 @@ const resumeModalFrame = document.getElementById("resumeModalFrame");
 const resumeTriggers = document.querySelectorAll(".resume-trigger");
 
 if (resumeModal && resumeModalOverlay && resumeModalClose && resumeModalFrame && resumeTriggers.length) {
-  const RESUME_SRC = "Vivek_Murugulla_Resume_MSBA.pdf";
+  // #view=FitH is a standard PDF Open Parameter: it tells the browser's
+  // PDF viewer to fit the page to the width of the frame on load. Mobile
+  // PDF viewers (iOS Safari's and Android Chrome's in particular) vary in
+  // their default zoom/scroll position without it, which can leave the
+  // page looking off-center or partially cropped on first open.
+  const RESUME_SRC = "Vivek_Murugulla_Resume_MSBA.pdf#view=FitH";
   let resumeFrameLoaded = false;
   let resumePreviouslyFocused = null;
 
